@@ -4,7 +4,7 @@ body {
   margin: 0;
 }
 
-@keyframes reveal {
+@keyframes fade-in {
   0% {
     opacity: 0;
   }
@@ -13,8 +13,48 @@ body {
   }
 }
 
-.reveal {
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.fade-in {
   opacity: 0;
-  animation: reveal 2s ease-out forwards;
+  animation: fade-in 1s ease-out forwards;
   animation-delay: 0.1s;
+}
+
+.fade-out {
+  opacity: 0;
+  animation: fade-out 0.5s ease-out forwards;
+}
+
+@keyframes title-fade-in {
+  0% {
+    transform: translateY(150px);
+    opacity: 0;
+  }
+  66% {
+    transform: translateY(150px);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.5, 0, 0.75, 1);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.title-fade-in {
+  animation: title-fade-in 1.5s ease-out forwards;
+}
+
+.form-fade-in {
+  opacity: 0;
+  animation: fade-in 1s ease-out forwards;
+  animation-delay: 1.4s;
 }
