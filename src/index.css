@@ -3,3 +3,18 @@
 body {
   margin: 0;
 }
+
+@keyframes reveal {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.reveal {
+  opacity: 0;
+  animation: reveal 2s ease-out forwards;
+  animation-delay: 0.1s;
+}
