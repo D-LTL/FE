@@ -3,7 +3,7 @@ import LoginForm from "./LoginForm";
 
 const LoginTemplate = () => {
   return (
-    <div className="z-10 flex flex-col items-center justify-center w-full h-screen">
+    <div className="z-10 flex flex-col items-center w-full h-screen">
       <LoginTitle />
       <LoginForm />
     </div>

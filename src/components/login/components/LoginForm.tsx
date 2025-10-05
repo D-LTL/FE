@@ -12,7 +12,7 @@ const LoginForm = () => {
       localStorage.setItem('accessToken', data.access_token);
     }
 
-    navigate('/home');
+    navigate('/main');
   };
 
   return (
