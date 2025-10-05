@@ -1,6 +1,6 @@
 const ProfileSection = () => {
   return (
-    <div className="w-full flex justify-end pr-6 mt-[70px]">
+    <div className="w-full flex justify-end pr-6 mt-[11px]">
       <button>
         <img src="/profile.svg" alt="/profile_img" width={39} height={39} />
       </button>
