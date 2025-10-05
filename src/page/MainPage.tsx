@@ -1,3 +1,4 @@
+import History from "../components/main/components/History";
 import MainTitle from "../components/main/components/MainTitle";
 import ProfileSection from "../components/main/components/ProfileSection";
 
@@ -6,6 +7,7 @@ const MainPage = () => {
     <div className="w-screen h-screen flex flex-col items-center">
       <ProfileSection />
       <MainTitle />
+      <History />
     </div>
   );
 }
