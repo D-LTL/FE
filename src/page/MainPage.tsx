@@ -9,7 +9,7 @@ const MainPage = () => {
       <ProfileSection />
       <MainTitle />
       <History className="flex-1" />
-      <div className="absolute bottom-0 w-full h-[238px] bg-gradient-to-t from-white to-transparent" />
+      <div className="absolute bottom-0 w-full h-[204px] bg-gradient-to-t from-white to-transparent" />
       <TranslationButton />
     </div>
   );
