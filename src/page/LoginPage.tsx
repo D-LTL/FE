@@ -1,5 +1,5 @@
 import { useState } from "react";
-import LoginTemplate from "../components/login/LoginTemplate";
+import LoginTemplate from "../components/login/components/LoginTemplate";
 
 const LoginPage = () => {
   const [firstView, setFirstView] = useState("fade-in");
