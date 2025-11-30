@@ -36,7 +36,7 @@ const MainPage = () => {
       <div className="flex-1 flex flex-col items-center justify-center">
         <MainTitle />
       </div>
-      <History className="h-[45vh]" onOpenTranslation={handleOpenTranslation} />
+      <History className="h-[55vh]" onOpenTranslation={handleOpenTranslation} />
       <div className="absolute bottom-0 w-full h-[150px] bg-gradient-to-t from-white via-white to-transparent pointer-events-none z-10" />
       <TranslationButton onOpen={() => handleOpenTranslation()} />
       {showVoiceModal && (

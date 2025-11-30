@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useVoiceStore } from "../store/voiceStore";
 
-type Step = "welcome" | "guide1" | "guide2" | "recording" | "complete";
+type Step = "welcome" | "guide" | "recording" | "recordingPaused" | "complete" | "titleInput";
 
 const VoiceRegisterPage = () => {
   const navigate = useNavigate();
@@ -10,184 +10,219 @@ const VoiceRegisterPage = () => {
   const [step, setStep] = useState<Step>("welcome");
   const [isRecording, setIsRecording] = useState(false);
   const [currentSentence, setCurrentSentence] = useState(0);
+  const [title, setTitle] = useState("");
 
   const sentences = [
-    "안녕하세요. 반갑습니다. 오늘도",
-    "좋은 하루 되세요. 감사합니다.",
-    "이것은 가을 오후입니다."
+    "어느 작은 마을에 호기심 많은 고양이가 살고 있었어. 고양이는 밤하늘의 반짝이는 별을 보고 마음을 빼앗겼지",
   ];
 
-  const handleNext = () => {
-    if (step === "welcome") setStep("guide1");
-    else if (step === "guide1") setStep("guide2");
-    else if (step === "guide2") setStep("recording");
+  // 자동으로 다음 단계로 넘어가기
+  useEffect(() => {
+    if (step === "welcome") {
+      const timer = setTimeout(() => {
+        setStep("guide");
+      }, 2000);
+      return () => clearTimeout(timer);
+    } else if (step === "guide") {
+      const timer = setTimeout(() => {
+        setStep("recording");
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [step]);
+
+  // 클릭하면 바로 다음 단계로
+  const handleScreenClick = () => {
+    if (step === "welcome") {
+      setStep("guide");
+    } else if (step === "guide") {
+      setStep("recording");
+    }
   };
 
-  const handleStartRecording = () => {
-    setIsRecording(true);
-    // 가짜 녹음 2초
-    setTimeout(() => {
+  // 녹음 버튼 클릭
+  const handleRecord = () => {
+    if (!isRecording) {
+      // 녹음 시작
+      setIsRecording(true);
+    } else {
+      // 녹음 중지 -> 일시정지 상태로
       setIsRecording(false);
-      if (currentSentence < sentences.length - 1) {
-        setCurrentSentence(currentSentence + 1);
-      } else {
-        // 모든 문장 녹음 완료
-        const newVoice = {
-          id: `voice-${Date.now()}`,
-          title: "내 음성",
-          createdAt: new Date().toISOString(),
-        };
-        addVoice(newVoice);
-        setStep("complete");
-      }
-    }, 2000);
+      setStep("recordingPaused");
+    }
   };
 
-  const handleComplete = () => {
+  // 다음으로 넘어가기
+  const handleNext = () => {
+    if (currentSentence < sentences.length - 1) {
+      setCurrentSentence(currentSentence + 1);
+      setStep("recording");
+      setIsRecording(false);
+    } else {
+      // 마지막 문장 완료 -> complete
+      setStep("complete");
+    }
+  };
+
+  // 제목 입력 완료
+  const handleSaveTitle = () => {
+    if (!title.trim()) {
+      alert("제목을 입력해주세요.");
+      return;
+    }
+
+    const newVoice = {
+      id: `voice-${Date.now()}`,
+      title: title.trim(),
+      createdAt: new Date().toISOString(),
+    };
+    addVoice(newVoice);
     navigate("/main");
   };
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Header */}
-      <div className="flex items-center px-6 py-4 border-b border-gray-200">
+      <div className="flex items-center px-6 py-4">
         <button
           onClick={() => navigate(-1)}
           className="text-2xl text-gray-700"
         >
-          ←
+          ✕
         </button>
-        <h1 className="flex-1 text-center text-lg font-semibold text-gray-800">
-          음성 등록
-        </h1>
-        <div className="w-8"></div>
       </div>
 
       {/* Content */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 py-8">
-        {/* Welcome Step */}
+      <div className="flex-1 flex flex-col items-center justify-between px-6 py-8">
+        {/* Welcome Step - 음성 학습을 시작하겠습니다 */}
         {step === "welcome" && (
-          <div className="flex flex-col items-center text-center">
+          <div
+            className="flex-1 flex flex-col items-center justify-center text-center w-full cursor-pointer"
+            onClick={handleScreenClick}
+          >
+            <div className="bg-[#5A9BED] text-white px-6 py-3 rounded-[20px] mb-8 inline-block">
+              <p className="text-sm font-medium">음성 학습을 시작하겠습니다!</p>
+            </div>
             <img
               src="/img/Logo.png"
               alt="또랑또랑 로고"
-              className="w-24 h-24 mb-6"
+              className="w-32 h-32 mb-6"
             />
-            <h2 className="text-xl font-bold text-gray-800 mb-3">
-              음성 등록을 시작합니다
-            </h2>
-            <p className="text-sm text-gray-600 mb-8 leading-relaxed max-w-sm">
-              다음 단계를 따라 음성을 등록해주세요.
+            <p className="text-sm text-gray-600 leading-relaxed">
+              음성등록은 약 5분정도 진행됩니다.
               <br />
-              3개의 문장을 읽으면 등록이 완료됩니다.
+              정확한 음성 등록을 위해 조용한 장소에서 진행해주세요.
             </p>
-            <button
-              onClick={handleNext}
-              className="w-full max-w-sm py-3 bg-[#4A90E2] text-white rounded-[60px] font-semibold hover:bg-[#357ABD] transition"
-            >
-              시작하기
-            </button>
           </div>
         )}
 
-        {/* Guide 1 */}
-        {step === "guide1" && (
-          <div className="flex flex-col items-center text-center">
-            <div className="mb-6">
-              <div className="text-6xl mb-4">📱</div>
+        {/* Guide Step - 화면에 보이는 문장을 따라 읽어주세요 */}
+        {step === "guide" && (
+          <div
+            className="flex-1 flex flex-col items-center justify-center text-center w-full cursor-pointer"
+            onClick={handleScreenClick}
+          >
+            <div className="bg-[#5A9BED] text-white px-6 py-3 rounded-[20px] mb-8 inline-block">
+              <p className="text-sm font-medium">화면에 보이는 문장을 따라 읽어주세요</p>
             </div>
-            <h2 className="text-xl font-bold text-gray-800 mb-3">
-              조용한 장소에서 녹음해주세요
-            </h2>
-            <p className="text-sm text-gray-600 mb-8 leading-relaxed max-w-sm">
-              음성 인식을 위해 주변 소음이 적은 곳에서
+            <img
+              src="/img/Logo.png"
+              alt="또랑또랑 로고"
+              className="w-32 h-32 mb-6"
+            />
+            <p className="text-sm text-gray-600 leading-relaxed">
+              음성등록은 약 5분정도 진행됩니다.
               <br />
-              녹음을 진행해주세요. 마이크를 입 가까이 대세요.
+              정확한 음성 등록을 위해 조용한 장소에서 진행해주세요.
             </p>
-            <button
-              onClick={handleNext}
-              className="w-full max-w-sm py-3 bg-[#4A90E2] text-white rounded-[60px] font-semibold hover:bg-[#357ABD] transition"
-            >
-              다음
-            </button>
           </div>
         )}
 
-        {/* Guide 2 */}
-        {step === "guide2" && (
-          <div className="flex flex-col items-center text-center">
-            <div className="mb-6">
-              <div className="text-6xl mb-4">🎤</div>
-            </div>
-            <h2 className="text-xl font-bold text-gray-800 mb-3">
-              화면에 표시되는 문장을 읽어주세요
-            </h2>
-            <p className="text-sm text-gray-600 mb-8 leading-relaxed max-w-sm">
-              제시된 문장을 자연스럽게 읽어주세요.
-              <br />
-              3개의 문장을 모두 읽으면 등록이 완료됩니다.
-            </p>
-            <button
-              onClick={handleNext}
-              className="w-full max-w-sm py-3 bg-[#4A90E2] text-white rounded-[60px] font-semibold hover:bg-[#357ABD] transition"
-            >
-              녹음 시작
-            </button>
-          </div>
-        )}
+        {/* Recording Step - 아래 문장을 따라 읽어주세요 */}
+        {(step === "recording" || step === "recordingPaused") && (
+          <div className="flex-1 flex flex-col items-center justify-between w-full">
+            <div className="flex flex-col items-center text-center w-full">
+              <div className="bg-[#5A9BED] text-white px-6 py-3 rounded-[20px] mb-12 inline-block">
+                <p className="text-sm font-medium">아래 문장을 따라 읽어주세요</p>
+              </div>
 
-        {/* Recording Step */}
-        {step === "recording" && (
-          <div className="flex flex-col items-center w-full max-w-md">
-            <div className="mb-6 text-center">
-              <p className="text-sm text-gray-500 mb-2">
-                {currentSentence + 1} / {sentences.length}
-              </p>
-              <div className="p-6 bg-[#F5F5F5] rounded-[20px] mb-8">
-                <p className="text-lg font-medium text-gray-800 leading-relaxed">
+              <div className="w-full max-w-md mb-8">
+                <p className="text-base font-medium text-gray-800 leading-relaxed border-b-2 border-gray-800 pb-3">
                   "{sentences[currentSentence]}"
                 </p>
               </div>
+
+              <button className="mb-4 px-6 py-2 bg-gray-300 text-gray-700 rounded-full text-sm flex items-center gap-2">
+                <span>🔊</span>
+                <span>음성으로 듣기</span>
+              </button>
             </div>
 
-            <div className="flex flex-col items-center">
-              <button
-                onClick={handleStartRecording}
-                disabled={isRecording}
-                className={`w-24 h-24 rounded-full flex items-center justify-center mb-4 ${
-                  isRecording
-                    ? "bg-red-500 animate-pulse"
-                    : "bg-[#4A90E2] hover:bg-[#357ABD]"
-                } transition`}
-              >
-                <div className="w-12 h-12 bg-white rounded-full"></div>
-              </button>
-              <p className="text-sm text-gray-600">
-                {isRecording ? "녹음 중..." : "탭하여 녹음"}
-              </p>
+            <div className="flex flex-col items-center w-full">
+              {step === "recording" && !isRecording && (
+                <>
+                  <p className="text-xs text-gray-500 mb-6">아래 버튼을 눌러 말씀해주세요</p>
+                  <button
+                    onClick={handleRecord}
+                    className="w-32 h-32 rounded-full flex items-center justify-center mb-8 transition bg-white border-4 border-[#5A9BED]"
+                  >
+                    <div className="w-16 h-16 bg-[#5A9BED] rounded-full"></div>
+                  </button>
+                </>
+              )}
+
+              {step === "recording" && isRecording && (
+                <>
+                  <p className="text-xs text-gray-500 mb-6">녹음중이에요</p>
+                  <button
+                    onClick={handleRecord}
+                    className="w-32 h-32 rounded-full flex items-center justify-center mb-8 transition bg-[#5A9BED]"
+                  >
+                    <div className="w-12 h-12 bg-white rounded-sm"></div>
+                  </button>
+                </>
+              )}
+
+              {step === "recordingPaused" && (
+                <button
+                  onClick={handleNext}
+                  className="w-full max-w-md py-4 bg-[#5A9BED] text-white rounded-[60px] font-semibold hover:bg-[#4A8BD6] transition"
+                >
+                  다음으로 넘어가기
+                </button>
+              )}
             </div>
           </div>
         )}
 
-        {/* Complete Step */}
+        {/* Complete Step - Title Input */}
         {step === "complete" && (
-          <div className="flex flex-col items-center text-center">
-            <div className="mb-6">
-              <div className="text-6xl mb-4">✅</div>
+          <div className="flex-1 flex flex-col items-center justify-center text-center w-full">
+            <div className="bg-[#5A9BED] text-white px-6 py-3 rounded-[20px] mb-12 inline-block">
+              <p className="text-sm font-medium">음성 학습을 모두 완료하였습니다!</p>
+              <p className="text-sm font-medium">등록하신 음성의 제목을 입력해주세요</p>
             </div>
-            <h2 className="text-xl font-bold text-gray-800 mb-3">
-              음성 등록이 완료되었습니다!
-            </h2>
-            <p className="text-sm text-gray-600 mb-8 leading-relaxed max-w-sm">
-              이제 번역 서비스를 사용할 수 있습니다.
-              <br />
-              감정이 반영된 음성으로 번역됩니다.
-            </p>
+            <img
+              src="/img/Logo.png"
+              alt="또랑또랑 로고"
+              className="w-32 h-32 mb-12"
+            />
+
+            <div className="w-full max-w-md mb-8">
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="음성1"
+                className="w-full px-6 py-3 border-b-2 border-gray-300 bg-transparent text-center focus:outline-none focus:border-[#5A9BED] text-base"
+              />
+            </div>
+
             <button
-              onClick={handleComplete}
-              className="w-full max-w-sm py-3 bg-[#4A90E2] text-white rounded-[60px] font-semibold hover:bg-[#357ABD] transition"
+              onClick={handleSaveTitle}
+              className="w-full max-w-md py-4 bg-[#5A9BED] text-white rounded-[60px] font-semibold hover:bg-[#4A8BD6] transition"
             >
-              완료
+              완료하기
             </button>
           </div>
         )}

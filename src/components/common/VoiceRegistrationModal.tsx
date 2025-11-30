@@ -14,15 +14,15 @@ const VoiceRegistrationModal = ({ onClose }: VoiceRegistrationModalProps) => {
 
   return (
     <>
-      {/* Backdrop with transparency */}
-      <div
-        className="fixed inset-0 bg-black bg-opacity-30 z-40"
-        onClick={onClose}
-      ></div>
-
       {/* Modal */}
-      <div className="fixed inset-0 flex items-center justify-center z-50 px-6">
-        <div className="bg-white rounded-[20px] p-8 w-full max-w-sm popup-slide-up shadow-xl">
+      <div
+        className="fixed inset-0 flex items-center justify-center z-50 px-6 bg-black bg-opacity-5"
+        onClick={onClose}
+      >
+        <div
+          className="bg-white rounded-[20px] p-8 w-full max-w-sm popup-slide-up shadow-xl"
+          onClick={(e) => e.stopPropagation()}
+        >
           <div className="flex flex-col items-center">
             <h2 className="text-xl font-bold text-gray-800 mb-3 text-center">
               환영합니다!
@@ -35,16 +35,16 @@ const VoiceRegistrationModal = ({ onClose }: VoiceRegistrationModalProps) => {
 
             <div className="flex gap-3 w-full">
               <button
-                onClick={onClose}
-                className="flex-1 py-3 px-4 bg-[#E8E8E8] text-gray-700 rounded-[60px] font-medium hover:bg-[#D4D4D4] transition"
-              >
-                아니오
-              </button>
-              <button
                 onClick={handleRegister}
-                className="flex-1 py-3 px-4 bg-[#4A90E2] text-white rounded-[60px] font-semibold hover:bg-[#357ABD] transition"
+                className="flex-1 py-3 px-4 bg-[#8FC2FF] text-white rounded-[60px] font-semibold hover:bg-[#7AB1EE] transition"
               >
                 예
+              </button>
+              <button
+                onClick={onClose}
+                className="flex-1 py-3 px-4 bg-[#153D6C] text-white rounded-[60px] font-medium hover:bg-[#0F2D4F] transition"
+              >
+                아니오
               </button>
             </div>
           </div>
