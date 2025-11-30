@@ -98,33 +98,42 @@ const HistoryItem = ({ item, onRename }: HistoryItemProps) => {
       {showPopup && (
         <>
           <div
-            className="fixed inset-0 bg-black bg-opacity-30 z-40"
+            className="fixed inset-0 bg-black bg-opacity-50 z-40"
             onClick={() => setShowPopup(false)}
           ></div>
-          <div className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[20px] p-6 z-50 popup-slide-up">
-            <div className="space-y-3">
-              <button
-                onClick={handleRename}
-                className="w-full py-4 text-left px-4 hover:bg-[#F5F5F5] rounded-[15px] transition"
-              >
-                <span className="text-base font-medium text-gray-800">
-                  이름 바꾸기
-                </span>
-              </button>
-              <button
-                onClick={handleViewDetail}
-                className="w-full py-4 text-left px-4 hover:bg-[#F5F5F5] rounded-[15px] transition"
-              >
-                <span className="text-base font-medium text-gray-800">
-                  자세히 보기
-                </span>
-              </button>
-              <button
-                onClick={() => setShowPopup(false)}
-                className="w-full py-4 text-center bg-[#EBEBEB] rounded-[15px] transition hover:bg-[#D4D4D4]"
-              >
-                <span className="text-base font-medium text-gray-600">취소</span>
-              </button>
+          <div className="fixed inset-0 flex items-center justify-center z-50 px-6">
+            <div className="bg-white rounded-[20px] p-6 w-full max-w-sm popup-slide-up">
+              <div className="flex flex-col items-center">
+                <img
+                  src="/img/Logo.png"
+                  alt="또랑또랑 로고"
+                  className="w-16 h-16 mb-4"
+                />
+                <h3 className="text-lg font-semibold text-gray-800 mb-6">
+                  {item.title}
+                </h3>
+
+                <div className="w-full space-y-2">
+                  <button
+                    onClick={handleRename}
+                    className="w-full py-3 px-4 bg-[#F5F5F5] text-gray-800 rounded-[15px] font-medium hover:bg-[#EBEBEB] transition"
+                  >
+                    이름 바꾸기
+                  </button>
+                  <button
+                    onClick={handleViewDetail}
+                    className="w-full py-3 px-4 bg-[#4A90E2] text-white rounded-[15px] font-medium hover:bg-[#357ABD] transition"
+                  >
+                    자세히 보기
+                  </button>
+                  <button
+                    onClick={() => setShowPopup(false)}
+                    className="w-full py-3 px-4 bg-gray-200 text-gray-700 rounded-[15px] font-medium hover:bg-gray-300 transition"
+                  >
+                    취소
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </>
