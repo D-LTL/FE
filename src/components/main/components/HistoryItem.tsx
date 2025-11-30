@@ -50,7 +50,7 @@ const HistoryItem = ({ item, onRename, onOpenTranslation }: HistoryItemProps) =>
         <button
           onClick={handlePlay}
           className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-            isPlaying ? "bg-[#787878]" : "bg-[#5A5A5A]"
+            isPlaying ? "bg-[#357ABD]" : "bg-[#4A90E2]"
           } transition`}
         >
           <div className="w-0 h-0 border-l-[10px] border-l-white border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent ml-1"></div>

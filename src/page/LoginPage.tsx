@@ -7,7 +7,7 @@ const LoginPage = () => {
 
   const FirstViewPage = () => (
     <div
-      className={`p-9 flex items-center justify-center h-screen bg-[#FFFEF5] ${firstView}`}
+      className={`p-9 flex items-center justify-center h-screen bg-white ${firstView}`}
       onClick={() => {
         setFirstView("fade-out");
         setTimeout(() => setShowLogin(true), 750);
