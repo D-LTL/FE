@@ -85,6 +85,13 @@ const TranslationModal = ({ onClose, historyData }: TranslationModalProps) => {
     setIsTranslated(false);
   };
 
+  const handleNewTranslation = () => {
+    setSourceText("");
+    setTranslatedText("");
+    setIsTranslated(false);
+    setInputMode("voice");
+  };
+
   return (
     <>
       {/* Backdrop */}
@@ -187,10 +194,10 @@ const TranslationModal = ({ onClose, historyData }: TranslationModalProps) => {
 
           {/* Input Area */}
           <div className="px-6 py-4 border-t border-gray-200">
-            {inputMode === "voice" ? (
-              <div className="flex flex-col items-center py-4">
-                {!sourceText && (
-                  <>
+            {!isTranslated ? (
+              <>
+                {inputMode === "voice" ? (
+                  <div className="flex flex-col items-center py-4">
                     <button
                       onClick={handleVoiceRecord}
                       disabled={isRecording}
@@ -205,44 +212,53 @@ const TranslationModal = ({ onClose, historyData }: TranslationModalProps) => {
                     <p className="text-xs text-gray-600">
                       {isRecording ? "녹음 중..." : "탭하여 녹음"}
                     </p>
-                  </>
+                  </div>
+                ) : (
+                  <div>
+                    <textarea
+                      value={sourceText}
+                      onChange={(e) => setSourceText(e.target.value)}
+                      placeholder="번역할 텍스트를 입력하세요"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-[20px] bg-[#EBEBEB] focus:outline-none focus:ring-2 focus:ring-[#5A5A5A] resize-none"
+                      rows={3}
+                    />
+                  </div>
                 )}
-              </div>
+
+                {/* Mode Toggle & Translate Button */}
+                <div className="flex items-center gap-3 mt-4">
+                  <button
+                    onClick={() =>
+                      setInputMode(inputMode === "voice" ? "text" : "voice")
+                    }
+                    className="w-12 h-12 rounded-full bg-[#EBEBEB] flex items-center justify-center hover:bg-[#D4D4D4] transition"
+                  >
+                    {inputMode === "voice" ? (
+                      <span className="text-xl">💬</span>
+                    ) : (
+                      <span className="text-xl">🎤</span>
+                    )}
+                  </button>
+                  {sourceText && (
+                    <button
+                      onClick={handleTranslate}
+                      className="flex-1 py-3 bg-[#4A90E2] text-white rounded-[60px] font-semibold hover:bg-[#357ABD] transition"
+                    >
+                      번역하기
+                    </button>
+                  )}
+                </div>
+              </>
             ) : (
-              <div>
-                <textarea
-                  value={sourceText}
-                  onChange={(e) => setSourceText(e.target.value)}
-                  placeholder="번역할 텍스트를 입력하세요"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-[20px] bg-[#EBEBEB] focus:outline-none focus:ring-2 focus:ring-[#5A5A5A] resize-none"
-                  rows={3}
-                />
+              <div className="py-4">
+                <button
+                  onClick={handleNewTranslation}
+                  className="w-full py-3 bg-[#4A90E2] text-white rounded-[60px] font-semibold hover:bg-[#357ABD] transition"
+                >
+                  새 번역
+                </button>
               </div>
             )}
-
-            {/* Mode Toggle & Translate Button */}
-            <div className="flex items-center gap-3 mt-4">
-              <button
-                onClick={() =>
-                  setInputMode(inputMode === "voice" ? "text" : "voice")
-                }
-                className="w-12 h-12 rounded-full bg-[#EBEBEB] flex items-center justify-center hover:bg-[#D4D4D4] transition"
-              >
-                {inputMode === "voice" ? (
-                  <span className="text-xl">💬</span>
-                ) : (
-                  <span className="text-xl">🎤</span>
-                )}
-              </button>
-              {sourceText && !isTranslated && (
-                <button
-                  onClick={handleTranslate}
-                  className="flex-1 py-3 bg-[#5A5A5A] text-white rounded-[60px] font-semibold"
-                >
-                  번역하기
-                </button>
-              )}
-            </div>
           </div>
         </div>
       </div>
