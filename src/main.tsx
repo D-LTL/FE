@@ -3,13 +3,19 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 
-if (import.meta.env.DEV) {
-  const { worker } = await import("./mock/browser.ts");
-  await worker.start();
+async function enableMocking() {
+  if (import.meta.env.DEV) {
+    const { worker } = await import("./mock/browser.ts");
+    return worker.start({
+      onUnhandledRequest: "bypass",
+    });
+  }
 }
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+enableMocking().then(() => {
+  createRoot(document.getElementById("root")!).render(
+    <StrictMode>
+      <App />
+    </StrictMode>
+  );
+});
