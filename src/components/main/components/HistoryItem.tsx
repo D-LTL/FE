@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import type { HistoryItem as HistoryItemType } from "../../../types/type";
 
 interface HistoryItemProps {
   item: HistoryItemType;
   onRename: (id: string, newTitle: string) => void;
+  onOpenTranslation: (historyData: HistoryItemType) => void;
 }
 
-const HistoryItem = ({ item, onRename }: HistoryItemProps) => {
-  const navigate = useNavigate();
+const HistoryItem = ({ item, onRename, onOpenTranslation }: HistoryItemProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -37,7 +36,8 @@ const HistoryItem = ({ item, onRename }: HistoryItemProps) => {
   };
 
   const handleViewDetail = () => {
-    navigate("/translate", { state: item });
+    setShowPopup(false);
+    onOpenTranslation(item);
   };
 
   return (

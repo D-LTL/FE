@@ -1,7 +1,13 @@
 import { useHistoryStore } from "../../../store/historyStore";
 import HistoryItem from "./HistoryItem";
+import type { HistoryItem as HistoryItemType } from "../../../types/type";
 
-const History = ({ className }: { className?: string }) => {
+interface HistoryProps {
+  className?: string;
+  onOpenTranslation: (historyData: HistoryItemType) => void;
+}
+
+const History = ({ className, onOpenTranslation }: HistoryProps) => {
   const { items, updateHistoryTitle } = useHistoryStore();
 
   return (
@@ -21,6 +27,7 @@ const History = ({ className }: { className?: string }) => {
                 key={item.id}
                 item={item}
                 onRename={updateHistoryTitle}
+                onOpenTranslation={onOpenTranslation}
               />
             ))}
           </div>

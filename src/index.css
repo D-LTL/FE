@@ -73,3 +73,7 @@ body {
 .popup-slide-up {
   animation: slide-up 0.3s ease-out;
 }
+
+.modal-slide-up {
+  animation: slide-up 0.4s ease-out;
+}
