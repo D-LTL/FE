@@ -16,6 +16,8 @@ const TranslationModal = ({ onClose, historyData }: TranslationModalProps) => {
   const [isTranslated, setIsTranslated] = useState(false);
   const [isPlayingSource, setIsPlayingSource] = useState(false);
   const [isPlayingTranslation, setIsPlayingTranslation] = useState(false);
+  const [sourceLang, setSourceLang] = useState("한국어");
+  const [targetLang, setTargetLang] = useState("영어");
 
   // 히스토리에서 진입한 경우 데이터 로드
   useEffect(() => {
@@ -109,6 +111,31 @@ const TranslationModal = ({ onClose, historyData }: TranslationModalProps) => {
           </button>
         </div>
 
+        {/* Language Selector */}
+        <div className="flex items-center justify-center px-6 py-4 bg-[#F5F5F5]">
+          <select
+            value={sourceLang}
+            onChange={(e) => setSourceLang(e.target.value)}
+            className="px-4 py-2 bg-white border border-gray-300 rounded-[10px] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#4A90E2]"
+          >
+            <option value="한국어">한국어</option>
+            <option value="영어">영어</option>
+            <option value="일본어">일본어</option>
+            <option value="중국어">중국어</option>
+          </select>
+          <span className="mx-3 text-lg text-gray-600">⇄</span>
+          <select
+            value={targetLang}
+            onChange={(e) => setTargetLang(e.target.value)}
+            className="px-4 py-2 bg-white border border-gray-300 rounded-[10px] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#4A90E2]"
+          >
+            <option value="영어">영어</option>
+            <option value="한국어">한국어</option>
+            <option value="일본어">일본어</option>
+            <option value="중국어">중국어</option>
+          </select>
+        </div>
+
         {/* Content */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Translation Display Area */}
@@ -117,7 +144,7 @@ const TranslationModal = ({ onClose, historyData }: TranslationModalProps) => {
             <div className="p-4 bg-[#F5F5F5] rounded-[20px]">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold text-gray-600">
-                  원문 (한국어)
+                  원문 ({sourceLang})
                 </span>
                 {sourceText && (
                   <button
@@ -140,7 +167,7 @@ const TranslationModal = ({ onClose, historyData }: TranslationModalProps) => {
               <div className="p-4 bg-[#EBEBEB] rounded-[20px]">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-semibold text-gray-600">
-                    번역 (영어)
+                    번역 ({targetLang})
                   </span>
                   <button
                     onClick={() => handlePlayAudio("translation")}
