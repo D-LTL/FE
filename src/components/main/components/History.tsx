@@ -11,11 +11,11 @@ const History = ({ className, onOpenTranslation }: HistoryProps) => {
   const { items, updateHistoryTitle } = useHistoryStore();
 
   return (
-    <div className={`w-full flex flex-col ${className}`}>
-      <div className="w-full px-6 py-3 text-sm font-normal border-b-2 border-[#D4D4D4]">
-        히스토리
+    <div className={`w-full flex flex-col bg-white rounded-t-[30px] shadow-lg ${className}`}>
+      <div className="w-full px-6 py-4 text-base font-semibold border-b border-gray-200">
+        음성 목록
       </div>
-      <div className="w-full bg-gray-300 flex flex-col flex-1 overflow-y-auto">
+      <div className="w-full bg-white flex flex-col flex-1 overflow-y-auto">
         {items.length === 0 ? (
           <p className="text-xs font-normal py-3 text-center">
             음성 목록이 없습니다

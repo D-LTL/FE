@@ -31,11 +31,12 @@ const MainPage = () => {
   };
 
   return (
-    <div className="relative w-screen h-screen flex flex-col items-center">
+    <div className="relative w-screen h-screen flex flex-col bg-[#FFFEF5]">
       <ProfileSection />
-      <MainTitle />
-      <History className="flex-1" onOpenTranslation={handleOpenTranslation} />
-      <div className="absolute bottom-0 w-full h-[204px] bg-gradient-to-t from-white to-transparent" />
+      <div className="flex-1 flex flex-col items-center justify-center">
+        <MainTitle />
+      </div>
+      <History className="h-[45vh]" onOpenTranslation={handleOpenTranslation} />
       <TranslationButton onOpen={() => handleOpenTranslation()} />
       {showVoiceModal && (
         <VoiceRegistrationModal onClose={() => setShowVoiceModal(false)} />

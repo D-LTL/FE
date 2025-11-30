@@ -6,7 +6,7 @@ const TranslationButton = ({ onOpen }: TranslationButtonProps) => {
   return (
     <button
       onClick={onOpen}
-      className="absolute bottom-[35px] z-10 w-[297px] h-[75px] mx-auto rounded-[80px] bg-[#787878] flex justify-center items-center text-white text-2xl font-semibold hover:bg-[#5A5A5A] transition"
+      className="absolute bottom-[calc(45vh+20px)] left-1/2 transform -translate-x-1/2 z-30 w-[200px] h-[60px] rounded-full bg-[#4A90E2] flex justify-center items-center text-white text-lg font-semibold hover:bg-[#357ABD] transition shadow-lg"
     >
       번역하기
     </button>
