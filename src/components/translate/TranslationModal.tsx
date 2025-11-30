@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import type { HistoryItem } from "../../types/type";
+import { useHistoryStore } from "../../store/historyStore";
 
 interface TranslationModalProps {
   onClose: () => void;
@@ -9,6 +10,7 @@ interface TranslationModalProps {
 type InputMode = "voice" | "text";
 
 const TranslationModal = ({ onClose, historyData }: TranslationModalProps) => {
+  const { addHistoryItem } = useHistoryStore();
   const [inputMode, setInputMode] = useState<InputMode>("voice");
   const [isRecording, setIsRecording] = useState(false);
   const [sourceText, setSourceText] = useState("");
@@ -67,6 +69,18 @@ const TranslationModal = ({ onClose, historyData }: TranslationModalProps) => {
     const translated = translations[sourceText] || `Translated: ${sourceText}`;
     setTranslatedText(translated);
     setIsTranslated(true);
+
+    // 히스토리에 자동 저장
+    const newHistoryItem: HistoryItem = {
+      id: `history-${Date.now()}`,
+      sourceText: sourceText,
+      translatedText: translated,
+      sourceAudioUrl: "",
+      translatedAudioUrl: "",
+      createdAt: new Date().toISOString(),
+      title: sourceText.length > 20 ? sourceText.substring(0, 20) + "..." : sourceText,
+    };
+    addHistoryItem(newHistoryItem);
   };
 
   const handlePlayAudio = (type: "source" | "translation") => {
