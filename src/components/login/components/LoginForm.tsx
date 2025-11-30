@@ -34,25 +34,31 @@ const LoginForm = () => {
         placeholder="ID"
         value={id}
         onChange={(e) => setId(e.target.value)}
-        className="w-full indent-1.5 mb-2 px-4 py-2 border border-gray-300 rounded-[60px] bg-[#EBEBEB] focus:outline-none focus:ring-2 focus:ring-[#aaaaaa]"
+        className="w-full indent-1.5 mb-2 px-4 py-3 border-none rounded-[10px] bg-[#E3F2FD] text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="w-full indent-1.5 mb-4 px-4 py-2 border border-gray-300 rounded-[60px] bg-[#EBEBEB] focus:outline-none focus:ring-2 focus:ring-[#aaaaaa]"
+        className="w-full indent-1.5 mb-2 px-4 py-3 border-none rounded-[10px] bg-[#E3F2FD] text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
+      <div className="w-full flex items-center gap-2 mb-4 px-2">
+        <input type="checkbox" id="remember" className="w-3 h-3" />
+        <label htmlFor="remember" className="text-xs text-gray-600">
+          Remember me
+        </label>
+      </div>
       {error && <p className="text-red-500 text-xs mb-2">{error}</p>}
       <button
         type="submit"
-        className="w-full text-sm font-semibold py-4 bg-[#5A5A5A] text-white rounded-[60px] mb-2"
+        className="w-full text-sm font-semibold py-4 bg-[#4A90E2] text-white rounded-[60px] mb-2 hover:bg-[#357ABD] transition"
       >
         Sign In
       </button>
       <button
         type="button"
-        className="w-full text-xs font-light py-4 bg-white rounded-[60px]"
+        className="w-full text-xs font-normal py-2 text-blue-500 hover:text-blue-700"
       >
         회원가입
       </button>
