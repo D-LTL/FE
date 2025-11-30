@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Voice } from '../types/type';
+import type { Voice } from '../types/type';
 
 interface VoiceStore {
   voices: Voice[];

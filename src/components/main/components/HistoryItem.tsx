@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { HistoryItem as HistoryItemType } from "../../../types/type";
+import type { HistoryItem as HistoryItemType } from "../../../types/type";
 
 interface HistoryItemProps {
   item: HistoryItemType;

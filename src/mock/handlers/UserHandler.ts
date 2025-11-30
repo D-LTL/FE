@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { LoginPayload } from "../../types/type";
+import type { LoginPayload } from "../../types/type";
 
 export const postLogin = http.post("/api/auth/login", async ({ request }) => {
   const body = (await request.json()) as LoginPayload;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { HistoryItem as HistoryItemType } from "../../../types/type";
+import type { HistoryItem as HistoryItemType } from "../../../types/type";
 import HistoryItem from "./HistoryItem";
 
 const History = ({ className }: { className?: string }) => {

@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { TranslationRequest } from "../../types/type";
+import type { TranslationRequest } from "../../types/type";
 
 // Preset translations
 const translations: { [key: string]: string } = {

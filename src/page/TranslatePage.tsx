@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { HistoryItem } from "../types/type";
+import type { HistoryItem } from "../types/type";
 
 type InputMode = "voice" | "text";
 
