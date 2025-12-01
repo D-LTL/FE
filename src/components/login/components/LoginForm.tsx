@@ -9,18 +9,25 @@ const LoginForm = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [debugInfo, setDebugInfo] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setDebugInfo("로그인 시도 중...");
 
     try {
+      setDebugInfo("API 요청 전송 중...");
       const data = await requestLogin({ id, password });
+      setDebugInfo("로그인 성공! 토큰: " + data.access_token.substring(0, 20) + "...");
 
       login({ id, username: id }, data.access_token);
       navigate("/main");
-    } catch (err) {
+    } catch (err: any) {
+      const errorMsg = err?.response?.data?.message || err?.message || "알 수 없는 오류";
+      const statusCode = err?.response?.status || "N/A";
       setError("아이디 또는 비밀번호가 올바르지 않습니다.");
+      setDebugInfo(`에러 발생 - 상태코드: ${statusCode}, 메시지: ${errorMsg}`);
     }
   };
 
@@ -50,6 +57,7 @@ const LoginForm = () => {
         </label>
       </div>
       {error && <p className="text-red-500 text-xs mb-2">{error}</p>}
+      {debugInfo && <p className="text-blue-600 text-xs mb-2 text-center">{debugInfo}</p>}
       <button
         type="submit"
         className="w-full text-sm font-semibold py-4 bg-[#4A90E2] text-white rounded-[60px] mb-2 hover:bg-[#357ABD] transition"

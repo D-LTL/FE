@@ -7,12 +7,12 @@ async function enableMocking() {
   try {
     const { worker } = await import("./mock/browser.ts");
     await worker.start({
-      onUnhandledRequest: "bypass",
+      onUnhandledRequest: "warn",
       serviceWorker: {
         url: '/mockServiceWorker.js'
       }
     });
-    console.log('[MSW] Mocking enabled');
+    console.log('[MSW] Mocking enabled successfully');
   } catch (error) {
     console.error('[MSW] Failed to start:', error);
   }
