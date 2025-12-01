@@ -4,12 +4,10 @@ import "./index.css";
 import App from "./App.tsx";
 
 async function enableMocking() {
-  if (import.meta.env.DEV) {
-    const { worker } = await import("./mock/browser.ts");
-    return worker.start({
-      onUnhandledRequest: "bypass",
-    });
-  }
+  const { worker } = await import("./mock/browser.ts");
+  return worker.start({
+    onUnhandledRequest: "bypass",
+  });
 }
 
 enableMocking().then(() => {
