@@ -1,6 +1,6 @@
 const MainTitle = () => {
   return (
-    <div className="w-[200px] h-fit flex flex-col items-center justify-center mt-[52px] mb-20">
+    <div className="w-[200px] h-fit flex flex-col items-center justify-center">
       <img
         src="/img/Logo.png"
         alt="또랑또랑 로고"

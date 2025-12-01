@@ -11,7 +11,7 @@ const History = ({ className, onOpenTranslation }: HistoryProps) => {
   const { items, updateHistoryTitle } = useHistoryStore();
 
   return (
-    <div className={`w-full flex flex-col bg-white rounded-t-[30px] shadow-lg ${className}`}>
+    <div className={`w-full flex flex-col bg-white rounded-t-[30px] ${className}`}>
       <div className="w-full px-6 py-4 text-base font-semibold border-b border-gray-200">
         음성 목록
       </div>

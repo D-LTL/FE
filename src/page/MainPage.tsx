@@ -5,6 +5,7 @@ import ProfileSection from "../components/main/components/ProfileSection";
 import TranslationButton from "../components/main/components/TranslationButton";
 import VoiceRegistrationModal from "../components/common/VoiceRegistrationModal";
 import TranslationModal from "../components/translate/TranslationModal";
+import BottomGradient from "../components/common/BottomGradient";
 import { useVoiceStore } from "../store/voiceStore";
 import type { HistoryItem } from "../types/type";
 
@@ -36,8 +37,8 @@ const MainPage = () => {
       <div className="flex-1 flex flex-col items-center justify-center">
         <MainTitle />
       </div>
-      <History className="h-[55vh]" onOpenTranslation={handleOpenTranslation} />
-      <div className="absolute bottom-0 w-full h-[150px] bg-gradient-to-t from-white via-white to-transparent pointer-events-none z-10" />
+      <History className="h-[45vh] mb-[10vh]" onOpenTranslation={handleOpenTranslation} />
+      <BottomGradient />
       <TranslationButton onOpen={() => handleOpenTranslation()} />
       {showVoiceModal && (
         <VoiceRegistrationModal onClose={() => setShowVoiceModal(false)} />

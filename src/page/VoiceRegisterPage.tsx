@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useVoiceStore } from "../store/voiceStore";
+import BottomGradient from "../components/common/BottomGradient";
 
 type Step = "welcome" | "guide" | "recording" | "recordingPaused" | "complete" | "titleInput";
 
@@ -81,7 +82,7 @@ const VoiceRegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="relative min-h-screen bg-white flex flex-col">
       {/* Header */}
       <div className="flex items-center px-6 py-4">
         <button
@@ -142,8 +143,8 @@ const VoiceRegisterPage = () => {
         {(step === "recording" || step === "recordingPaused") && (
           <div className="flex-1 flex flex-col items-center justify-between w-full">
             <div className="flex flex-col items-center text-center w-full">
-              <div className="bg-[#5A9BED] text-white px-6 py-3 rounded-[20px] mb-12 inline-block">
-                <p className="text-sm font-medium">아래 문장을 따라 읽어주세요</p>
+              <div className="bg-[#5A9BED] text-white px-6 py-3 rounded-xl mb-12 inline-block">
+                <p className="text-sm font-bold">아래 문장을 따라 읽어주세요</p>
               </div>
 
               <div className="w-full max-w-md mb-8">
@@ -152,13 +153,13 @@ const VoiceRegisterPage = () => {
                 </p>
               </div>
 
-              <button className="mb-4 px-6 py-2 bg-gray-300 text-gray-700 rounded-full text-sm flex items-center gap-2">
-                <span>🔊</span>
+              <button className="mb-4 px-6 py-2 bg-[#B5BDC7] text-white font-bold rounded-xl text-sm flex items-center gap-2">
+                <span><img src="./img/play_gray.png" alt="play" width={16} height={13} /></span>
                 <span>음성으로 듣기</span>
               </button>
             </div>
 
-            <div className="flex flex-col items-center w-full">
+            <div className="flex flex-col items-center w-full relative z-20">
               {step === "recording" && !isRecording && (
                 <>
                   <p className="text-xs text-gray-500 mb-6">아래 버튼을 눌러 말씀해주세요</p>
@@ -197,7 +198,7 @@ const VoiceRegisterPage = () => {
 
         {/* Complete Step - Title Input */}
         {step === "complete" && (
-          <div className="flex-1 flex flex-col items-center justify-center text-center w-full">
+          <div className="flex-1 flex flex-col items-center justify-center text-center w-full relative z-20">
             <div className="bg-[#5A9BED] text-white px-6 py-3 rounded-[20px] mb-12 inline-block">
               <p className="text-sm font-medium">음성 학습을 모두 완료하였습니다!</p>
               <p className="text-sm font-medium">등록하신 음성의 제목을 입력해주세요</p>
@@ -227,6 +228,7 @@ const VoiceRegisterPage = () => {
           </div>
         )}
       </div>
+      <BottomGradient />
     </div>
   );
 };

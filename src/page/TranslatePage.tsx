@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import type { HistoryItem } from "../types/type";
+import BottomGradient from "../components/common/BottomGradient";
 
 type InputMode = "voice" | "text";
 
@@ -84,7 +85,7 @@ const TranslatePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="relative min-h-screen bg-white flex flex-col">
       {/* Header */}
       <div className="flex items-center px-6 py-4 border-b border-gray-200">
         <button
@@ -213,6 +214,7 @@ const TranslatePage = () => {
           </div>
         </div>
       </div>
+      <BottomGradient />
     </div>
   );
 };

@@ -45,6 +45,8 @@ export interface HistoryItem {
   translatedAudioUrl: string;
   createdAt: string;
   title: string;
+  sourceLang?: string;
+  targetLang?: string;
 }
 
 export interface HistoryResponse {

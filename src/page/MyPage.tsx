@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useVoiceStore } from "../store/voiceStore";
+import BottomGradient from "../components/common/BottomGradient";
 
 const MyPage = () => {
   const navigate = useNavigate();
   const { voices, defaultVoiceId, setDefaultVoice } = useVoiceStore();
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="relative min-h-screen bg-white flex flex-col">
       {/* Header */}
       <div className="flex items-center px-6 py-4 border-b border-gray-200">
         <button
@@ -77,6 +78,7 @@ const MyPage = () => {
           )}
         </div>
       </div>
+      <BottomGradient />
     </div>
   );
 };
